@@ -38,7 +38,7 @@ namespace Calculadora.Controllers
         {
             var service = _calculatorServices.Where(c => c.CodigoOperacao == request.Operacao) ?? throw new ArgumentException("Service not found");
 
-            var response = service.Execute(request);
+            var response = service.FirstOrDefault().Execute(request);
 
             var historico = new HistoricoBaseViewModel(request, response);
 
