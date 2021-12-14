@@ -27,12 +27,13 @@ export class HistoryComponent implements OnInit {
     this.message = message;
   }
 
-  public download(): void {
+  public download(): any {
     this._apiService.download()
       .subscribe(response => {
         this.downloadFile(response, `text/csv`, `Calculator_history_${new Date()}`, 'csv');
         this.alert('success');
       }, error => {
+        console.log(error);
         this.alert('warning', `Ocorreu um erro inesperado, por favor tente novamente`);
       });
   }
@@ -44,11 +45,6 @@ export class HistoryComponent implements OnInit {
     formato: string
   ) {
     const blob = new Blob([data], { type: tipo });
-    const url = window.URL.createObjectURL(blob);
-    const anchor = document.createElement('a');
-    anchor.download = `${nome}.${formato.toLowerCase()}`;
-    anchor.href = url;
-    anchor.click();
-    window.URL.revokeObjectURL(url);
+    saveAs(blob, `${nome}.${formato.toLowerCase()}`);
   }
 }
