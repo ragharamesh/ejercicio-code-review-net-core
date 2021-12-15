@@ -7,6 +7,13 @@ namespace Calculadora.Services
 	{
 		public ECodigoOperacao CodigoOperacao => ECodigoOperacao.Divisao;
 
-		public decimal Execute(IRequestViewModel request) => request.Numero1 / request.Numero2;
+		public decimal Execute(IRequestViewModel request) {
+			try
+			{
+			return request.Numero1 / request.Numero2;
+			}catch(System.DivideByZeroException){
+				return 0;
+			}
+		}
 	}
 }
